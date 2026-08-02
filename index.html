@@ -13,13 +13,13 @@
 <meta property="og:description" content="Pull your Telegram media to disk over several parallel connections. No server, no bot, no relay. Free, open source, MIT.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yaserzarifi.github.io/TeleDownloader-Telegram-Download-Manager-/">
-<!-- Add a screenshot of your app to your repo and link it here for social previews -->
-<!-- <meta property="og:image" content="https://yaserzarifi.github.io/.../preview.png"> -->
+<meta property="og:image" content="https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true">
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TeleWire - Open Source Telegram Download Manager">
 <meta name="twitter:description" content="Pull your Telegram media to disk over several parallel connections. Free, open source, MIT.">
+<meta name="twitter:image" content="https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true">
 
 <!-- Answer Engine Optimization (AEO): JSON-LD Schema Markup -->
 <!-- This tells AI search engines exactly what this page is offering -->
@@ -30,6 +30,7 @@
   "name": "TeleWire",
   "operatingSystem": "Windows, macOS, Linux",
   "applicationCategory": "UtilitiesApplication",
+  "image": "https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true",
   "description": "An open-source Telegram download manager that signs into your own Telegram account and pulls media straight to disk over several parallel connections. No server in between.",
   "offers": {
     "@type": "Offer",
@@ -422,17 +423,17 @@
   .foot-note{ font-family:var(--mono); font-size:11.5px; color:var(--muted-dim); margin-top:18px; }
 
   /* reveal animations */
-  .reveal { 
-    opacity: 0; 
-    transform: translateY(20px); 
-    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); 
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
     will-change: opacity, transform; /* Optimize for hardware acceleration */
   }
-  .reveal.in { 
-    opacity: 1; 
-    transform: translateY(0); 
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+
   /* Staggered delays for child elements if needed */
   .delay-1 { transition-delay: 0.1s; }
   .delay-2 { transition-delay: 0.2s; }
@@ -735,7 +736,7 @@
       <div class="author-note">
         <span class="eyebrow" style="color:var(--teal); margin-bottom: -4px;">A note from the developer</span>
         <p>
-          Hi there! I built TeleWire purely because I needed a robust download manager for my own Telegram files. This project is <strong>completely non-monetized</strong>. It started as a fun project to solve a personal pain point, and I decided to put it out here open-source, hoping you might find it genuinely useful too. 
+          Hi there! I built TeleWire purely because I needed a robust download manager for my own Telegram files. This project is <strong>completely non-monetized</strong>. It started as a fun project to solve a personal pain point, and I decided to put it out here open-source, hoping you might find it genuinely useful too.
         </p>
         <p>
           I really appreciate your feedback, bug reports, or messages!
@@ -793,14 +794,14 @@
   // Scroll-reveal, respects reduced-motion via the CSS override above.
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { 
-      if (e.isIntersecting) { 
-        e.target.classList.add('in'); 
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
         // Optional: Stop observing once revealed if you only want it to happen once
-        // io.unobserve(e.target); 
-      } 
+        // io.unobserve(e.target);
+      }
     });
-  }, { 
+  }, {
     threshold: 0.1, // Trigger slightly earlier
     rootMargin: "0px 0px -50px 0px" // Trigger before it comes fully into view from bottom
   });
