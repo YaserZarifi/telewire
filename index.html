@@ -3,53 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TeleWire - Open Source Telegram Download Manager</title>
+<title>TeleWire — Open Source Telegram Download Manager</title>
 <meta name="description" content="TeleWire is a free, open-source MTProto Telegram download manager. Pull your Telegram media to disk over parallel connections. No server, no bot, no relay.">
-<meta name="keywords" content="Telegram download manager, MTProto client, parallel download, open source Telegram tool, Yaser Zarifi, TeleWire, github open source">
+<meta name="keywords" content="Telegram download manager, MTProto client, parallel download, open source Telegram tool, Yaser Zarifi, TeleWire, github open source, rust telegram client, fast telegram downloader">
 <meta name="author" content="Yaser Zarifi">
 
-<!-- Open Graph / Social Media Meta Tags -->
-<meta property="og:title" content="TeleWire - Open Source Telegram Download Manager">
+<!-- God-Level SEO: Canonical Link (Prevents duplicate content penalties) -->
+<link rel="canonical" href="https://yaserzarifi.github.io/telewire/">
+
+<!-- God-Level SEO: Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="TeleWire — Open Source Telegram Download Manager">
 <meta property="og:description" content="Pull your Telegram media to disk over several parallel connections. No server, no bot, no relay. Free, open source, MIT.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yaserzarifi.github.io/TeleDownloader-Telegram-Download-Manager-/">
+<meta property="og:url" content="https://yaserzarifi.github.io/telewire/">
 <meta property="og:image" content="https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true">
+<meta property="og:image:alt" content="Screenshot of the TeleWire desktop application interface showing parallel download progress">
 
-<!-- Twitter Meta Tags -->
+<!-- God-Level SEO: Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TeleWire - Open Source Telegram Download Manager">
+<meta name="twitter:title" content="TeleWire — Open Source Telegram Download Manager">
 <meta name="twitter:description" content="Pull your Telegram media to disk over several parallel connections. Free, open source, MIT.">
 <meta name="twitter:image" content="https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true">
 
-<!-- Answer Engine Optimization (AEO): JSON-LD Schema Markup -->
-<!-- This tells AI search engines exactly what this page is offering -->
+<!-- God-Level AEO: JSON-LD Graph. Combines Software App info + FAQ structure for Answer Engines -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "TeleWire",
-  "operatingSystem": "Windows, macOS, Linux",
-  "applicationCategory": "UtilitiesApplication",
-  "image": "https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true",
-  "description": "An open-source Telegram download manager that signs into your own Telegram account and pulls media straight to disk over several parallel connections. No server in between.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "Yaser Zarifi",
-    "url": "https://yaserzarifi.vercel.app/en"
-  },
-  "license": "https://opensource.org/licenses/MIT",
-  "isAccessibleForFree": true
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "TeleWire",
+      "operatingSystem": "Windows, macOS, Linux",
+      "applicationCategory": "UtilitiesApplication",
+      "url": "https://yaserzarifi.github.io/telewire/",
+      "image": "https://github.com/YaserZarifi/telewire/blob/main/assets/screenshot.png?raw=true",
+      "description": "An open-source Telegram download manager that signs into your own Telegram account and pulls media straight to disk over several parallel connections. No server in between.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Yaser Zarifi",
+        "url": "https://yaserzarifi.vercel.app/en"
+      },
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "featureList": [
+        "Parallel chunked downloads",
+        "Crash-safe resume",
+        "Native MTProto client",
+        "Zero telemetry"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is TeleWire a Telegram bot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, TeleWire is not a bot. It is a native MTProto client built in Rust that signs into your personal Telegram account exactly like the official desktop app."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does TeleWire download files faster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TeleWire splits your Telegram files into 512 KiB chunks and pulls them to your disk using several parallel connections via a work-stealing queue, maximizing your bandwidth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my Telegram account data safe with TeleWire?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. TeleWire has zero telemetry, no third-party servers, and runs locally. Your api_hash is stored in your OS keychain, and the code is 100% open source for independent auditing."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --bg: #0b0f18;
@@ -86,7 +130,7 @@
   ::selection{ background:var(--copper); color:#1a1206; }
 
   a{ color:inherit; }
-  img,svg{ display:block; max-width:100%; }
+  img,svg{ display:block; max-width:100%; height:auto; }
 
   .wrap{ width:100%; max-width:var(--wrap); margin:0 auto; padding:0 28px; }
 
@@ -105,6 +149,7 @@
     background:var(--copper-dim);
   }
 
+  /* ---------------------------------------------------------------- nav */
   header{
     position:sticky; top:0; z-index:40;
     background:rgba(11,15,24,0.82);
@@ -150,6 +195,7 @@
   .btn-ghost:hover{ border-color:var(--muted-dim); }
   .nav .btn{ padding:9px 16px; }
 
+  /* --------------------------------------------------------------- hero */
   .hero{
     padding:96px 0 40px;
     position:relative;
@@ -183,7 +229,7 @@
   .cta-sub a{ color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line); }
   .cta-sub a:hover{ color:var(--paper); border-color:var(--muted); }
 
-  /* signature: the pull - parallel wires feeding a file */
+  /* signature: the pull — parallel wires feeding a file */
   .rig{
     position:relative;
     background:var(--bg-raised);
@@ -240,6 +286,7 @@
     100%{ box-shadow:0 0 0 0 rgba(95,217,203,0); }
   }
 
+  /* -------------------------------------------------------------- strip */
   .strip{
     border-top:1px solid var(--line-soft);
     border-bottom:1px solid var(--line-soft);
@@ -255,6 +302,7 @@
   }
   .strip-item svg{ width:15px; height:15px; flex:none; color:var(--copper); }
 
+  /* ------------------------------------------------------------ section */
   section{ padding:88px 0; }
   .section-head{ max-width:640px; margin-bottom:48px; }
   h2{
@@ -287,6 +335,7 @@
   .feat h3{ font-size:17px; margin:0 0 8px; font-weight:600; letter-spacing:-0.01em; }
   .feat p{ font-size:13.8px; color:var(--muted); margin:0; }
 
+  /* pipeline */
   .pipeline{
     position:relative;
     display:grid; grid-template-columns:repeat(6,1fr); gap:0;
@@ -329,44 +378,6 @@
   .checklist li svg{ flex:none; width:16px; height:16px; margin-top:2px; color:var(--teal); }
   .checklist li span{ color:var(--muted); display:block; font-size:13px; margin-top:2px; }
 
-  .author-note {
-    background: linear-gradient(135deg, rgba(227,160,99,0.07), rgba(95,217,203,0.03)), var(--bg-raised);
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--copper);
-    border-radius: 8px;
-    padding: 36px 44px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .author-note p {
-    margin: 0;
-    font-size: 15.5px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .author-note strong {
-    color: var(--paper);
-    font-weight: 600;
-  }
-  .author-note .signature {
-    font-family: var(--mono);
-    color: var(--copper);
-    font-size: 13.5px;
-    margin-top: 12px;
-  }
-  .author-note .signature a {
-    color: var(--teal);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(95,217,203,0.3);
-    transition: border-color 0.2s ease, color 0.2s ease;
-  }
-  .author-note .signature a:hover {
-    border-bottom-color: var(--teal);
-    color: #fff;
-  }
-
   /* status */
   .status-table{
     border:1px solid var(--line-soft); border-radius:6px; overflow:hidden;
@@ -389,6 +400,32 @@
   .badge.done{ background:rgba(95,217,203,0.12); color:var(--teal); border:1px solid var(--teal-dim); }
   .badge.partial{ background:rgba(227,160,99,0.12); color:var(--copper); border:1px solid var(--copper-dim); }
 
+  /* faq (AEO optimized) */
+  .faq-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px;
+  }
+  .faq-item h3 { font-size: 16px; margin: 0 0 8px; font-weight: 600; color: var(--paper); }
+  .faq-item p { font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  /* author note */
+  .author-note {
+    background: linear-gradient(135deg, rgba(227,160,99,0.07), rgba(95,217,203,0.03)), var(--bg-raised);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--copper);
+    border-radius: 8px;
+    padding: 36px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .author-note p { margin: 0; font-size: 15.5px; color: var(--muted); line-height: 1.6; }
+  .author-note strong { color: var(--paper); font-weight: 600; }
+  .author-note .signature { font-family: var(--mono); color: var(--copper); font-size: 13.5px; margin-top: 12px; }
+  .author-note .signature a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(95,217,203,0.3); transition: border-color 0.2s ease, color 0.2s ease; }
+  .author-note .signature a:hover { border-bottom-color: var(--teal); color: #fff; }
+
+  /* download */
   .download-cta{
     text-align:center;
     padding:70px 44px;
@@ -427,14 +464,12 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: opacity, transform; /* Optimize for hardware acceleration */
+    will-change: opacity, transform;
   }
   .reveal.in {
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Staggered delays for child elements if needed */
   .delay-1 { transition-delay: 0.1s; }
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
@@ -449,6 +484,7 @@
     .privacy-card{ grid-template-columns:1fr; }
     .strip .wrap{ gap:18px; }
     .author-note{ padding:28px; }
+    .faq-grid { grid-template-columns: 1fr; gap: 24px; }
   }
   @media (max-width: 560px){
     .feat-grid{ grid-template-columns:1fr; }
@@ -466,15 +502,15 @@
 
 <header>
   <div class="nav wrap">
-    <a class="brand" href="#top"><span class="dot"></span>TeleWire</a>
-    <nav class="nav-links">
+    <a class="brand" href="#top" aria-label="TeleWire Home"><span class="dot"></span>TeleWire</a>
+    <nav class="nav-links" aria-label="Main Navigation">
       <a href="#how">How it works</a>
       <a href="#privacy">Privacy</a>
-      <a href="#state">Project state</a>
       <a href="docs.html">Documentation</a>
-      <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">GitHub</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/YaserZarifi/telewire" target="_blank" rel="noopener">GitHub</a>
     </nav>
-    <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
+    <a class="btn btn-primary" href="https://github.com/YaserZarifi/telewire/releases/latest/download/TeleWire_1.0.0_x64-setup.exe" aria-label="Download TeleWire for Windows">
       Download for Windows
     </a>
   </div>
@@ -488,27 +524,27 @@
         <span class="eyebrow">MTProto client · not a bot, not a relay</span>
         <h1>Your files.<br>Your account.<br><em>No server in between.</em></h1>
         <p class="lede">
-          TeleWire signs into your Telegram account and pulls media straight
+          TeleWire signs into your personal Telegram account and pulls media straight
           to disk over several parallel connections. It supports pausing, resuming,
           queueing, and downloads that survive an unexpected crash.
         </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
+          <a class="btn btn-primary" href="https://github.com/YaserZarifi/telewire/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
             ↓ Download v1.0 (Windows)
           </a>
-          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">
+          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/telewire" target="_blank" rel="noopener">
             View source
           </a>
         </div>
         <div class="cta-sub">
           <span>Free &amp; open source (MIT)</span>
-          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">.msi installer</a>
-          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest">All releases</a>
+          <a href="https://github.com/YaserZarifi/telewire/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">.msi installer</a>
+          <a href="https://github.com/YaserZarifi/telewire/releases/latest" target="_blank" rel="noopener">All releases</a>
         </div>
       </div>
 
       <!-- signature element: the pull -->
-      <div class="rig reveal delay-1">
+      <div class="rig reveal delay-1" aria-hidden="true">
         <div class="rig-inner">
           <div class="wire-row">
             <span class="idx mono">00</span>
@@ -547,29 +583,29 @@
   <div class="strip">
     <div class="wrap">
       <div class="strip-item reveal">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h5M12 10h5M8 6l-2 4 2 4M12 6l2 4-2 4"/></svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 10h5M12 10h5M8 6l-2 4 2 4M12 6l2 4-2 4"/></svg>
         No server
       </div>
       <div class="strip-item reveal delay-1">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
         No bot account
       </div>
       <div class="strip-item reveal delay-2">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l12 12M16 4L4 16"/></svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg>
         No relay, ever
       </div>
       <div class="strip-item reveal delay-3">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="12" height="14" rx="1"/><path d="M7 7h6M7 10h6M7 13h3"/></svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="3" width="12" height="14" rx="1"/><path d="M7 7h6M7 10h6M7 13h3"/></svg>
         Zero telemetry
       </div>
       <div class="strip-item reveal delay-4">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5l6-3z"/></svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5l6-3z"/></svg>
         MIT licensed
       </div>
     </div>
   </div>
 
-  <section>
+  <section id="features">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">What it does</span>
@@ -578,36 +614,36 @@
       </div>
 
       <div class="feat-grid">
-        <div class="feat reveal">
+        <article class="feat reveal">
           <span class="tag mono">01 · coverage</span>
           <h3>Every chat, grouped</h3>
           <p>Search and browse channels, groups, bots, one-to-one chats, and Saved Messages. We classify them the same way Telegram does.</p>
-        </div>
-        <div class="feat reveal delay-1">
+        </article>
+        <article class="feat reveal delay-1">
           <span class="tag mono">02 · classify</span>
           <h3>Every file type</h3>
           <p>Video, audio, photos, and documents are classified using both MIME and filename. That means an octet-stream video will still correctly show up as a video.</p>
-        </div>
-        <div class="feat reveal delay-2">
+        </article>
+        <article class="feat reveal delay-2">
           <span class="tag mono">03 · throughput</span>
           <h3>Parallel by default</h3>
           <p>Each file splits into 512 KiB chunks. Multiple connections pull these chunks simultaneously from a shared work-stealing queue.</p>
-        </div>
-        <div class="feat reveal">
+        </article>
+        <article class="feat reveal">
           <span class="tag mono">04 · tuning</span>
           <h3>Adaptive speed</h3>
           <p>We tune the worker count based on actual measured throughput, rather than guessing. It adds workers when it helps and scales back if it stops helping.</p>
-        </div>
-        <div class="feat reveal delay-1">
+        </article>
+        <article class="feat reveal delay-1">
           <span class="tag mono">05 · resilience</span>
           <h3>Crash-safe resume</h3>
           <p>If you kill the app mid-transfer, it's fine. We use a manifest of confirmed-flushed chunks, so the next launch resumes exactly where you left off.</p>
-        </div>
-        <div class="feat reveal delay-2">
+        </article>
+        <article class="feat reveal delay-2">
           <span class="tag mono">06 · order</span>
           <h3>Auto-organised</h3>
           <p>Files automatically land in organized folders: <code>&lt;download root&gt;/&lt;chat&gt;/&lt;YYYY-MM&gt;/&lt;filename&gt;</code>. You get pause, resume, cancel, and retry controls for every single job.</p>
-        </div>
+        </article>
       </div>
     </div>
   </section>
@@ -665,25 +701,25 @@
         </div>
         <ul class="checklist">
           <li>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10l4 4 8-8"/></svg>
             <div>No analytics, no crash reporting, no phone-home
               <span>The only network destination is Telegram's own servers. There is no update check and no error collector.</span>
             </div>
           </li>
           <li>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10l4 4 8-8"/></svg>
             <div>The webview never makes a network request
               <span>A strict Content-Security-Policy blocks all remote origins. Even the fonts are bundled locally.</span>
             </div>
           </li>
           <li>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10l4 4 8-8"/></svg>
             <div>api_hash lives in your OS keychain
               <span>We use Windows Credential Manager, macOS Keychain, or Linux Secret Service. Never a plain text config file.</span>
             </div>
           </li>
           <li>
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10l4 4 8-8"/></svg>
             <div>Session key never crosses into the frontend
               <span>The MTProto session stays secure in an owner-only SQLite file inside your per-user app data directory.</span>
             </div>
@@ -693,41 +729,30 @@
     </div>
   </section>
 
-  <section id="state">
+  <section id="faq">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Built in the open</span>
-        <h2>State of the project, stated plainly</h2>
-        <p>We don't mark any milestone as done until we've tested it against a live account.</p>
+        <span class="eyebrow">Frequently Asked Questions</span>
+        <h2>Answers about TeleWire</h2>
       </div>
-
-      <div class="status-table">
-        <div class="status-row reveal">
-          <span class="m">M1–M3</span>
-          <span class="desc">Login, session persistence, paginated media browsing, single-file download</span>
-          <span class="badge done">Verified</span>
+      <div class="faq-grid">
+        <div class="faq-item reveal delay-1">
+          <h3>Is TeleWire a Telegram bot?</h3>
+          <p>No, TeleWire is not a bot. It is a native MTProto client built in Rust that signs into your personal Telegram account, exactly like the official desktop app. It only accesses what you already have access to.</p>
         </div>
-        <div class="status-row reveal delay-1">
-          <span class="m">M4–M5</span>
-          <span class="desc">Parallel chunked downloads, queue with pause / resume / cancel / retry</span>
-          <span class="badge done">Verified</span>
+        <div class="faq-item reveal delay-2">
+          <h3>How does TeleWire download files faster?</h3>
+          <p>By splitting large media files into 512 KiB chunks. TeleWire uses a work-stealing queue to pull these chunks simultaneously over multiple parallel connections, which maximizes your available bandwidth.</p>
         </div>
-        <div class="status-row reveal delay-2">
-          <span class="m">M6</span>
-          <span class="desc">Crash resume, adaptive concurrency, auto-organised folders</span>
-          <span class="badge partial">Implemented</span>
+        <div class="faq-item reveal delay-3">
+          <h3>Is my Telegram account data safe?</h3>
+          <p>Yes. The app features zero telemetry and no third-party servers. Your session is saved locally in a secure SQLite file, and your `api_hash` is safely stored in your native OS keychain. The source code is entirely open source and verifiable.</p>
         </div>
-        <div class="status-row reveal delay-3">
-          <span class="m">M7</span>
-          <span class="desc">Installers for Windows / macOS / Linux</span>
-          <span class="badge partial">Windows only</span>
+        <div class="faq-item reveal delay-4">
+          <h3>Does it bypass Telegram download limits?</h3>
+          <p>No. TeleWire completely respects Telegram's API limitations (including flood-waits). It simply optimizes the connection architecture to ensure you hit the maximum speed Telegram allows for your account tier.</p>
         </div>
       </div>
-      <p class="foot-note reveal delay-4" style="margin-top:16px;">
-        Not yet built, and deliberately parked: cross-channel search, duplicate detection by file hash,
-        a per-connection throughput graph, CI-signed installers, and the auto-updater. Builds are unsigned,
-        so SmartScreen will warn on first launch.
-      </p>
     </div>
   </section>
 
@@ -755,16 +780,16 @@
         <h2>Free. Open source. Nothing to pay for, ever.</h2>
         <p>Sign in with your phone number, exactly like the official app. TeleWire is not a bot. It only sees what your account can already see.</p>
         <div class="platform-row">
-          <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
+          <a class="btn btn-primary" href="https://github.com/YaserZarifi/telewire/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
             ↓ TeleWire_1.0.0_x64-setup.exe
           </a>
-          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">
+          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/telewire/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">
             .msi installer
           </a>
         </div>
         <div class="fileinfo">
           v1.0 · Windows x64 · 2.8 MB ·
-          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest">release notes on GitHub</a>
+          <a href="https://github.com/YaserZarifi/telewire/releases/latest" target="_blank" rel="noopener">release notes on GitHub</a>
           · macOS &amp; Linux build from source today
         </div>
       </div>
@@ -776,12 +801,12 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <a class="brand" href="#top"><span class="dot"></span>TeleWire</a>
-      <div class="foot-links">
-        <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">GitHub</a>
+      <a class="brand" href="#top" aria-label="Back to top"><span class="dot"></span>TeleWire</a>
+      <div class="foot-links" aria-label="Footer Navigation">
+        <a href="https://github.com/YaserZarifi/telewire" target="_blank" rel="noopener">GitHub</a>
         <a href="docs.html">Documentation</a>
-        <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/blob/master/LICENSE">MIT License</a>
-        <a href="https://www.linkedin.com/in/mohammad-yaser-zarifi/">Yaser Zarifi</a>
+        <a href="https://github.com/YaserZarifi/telewire/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>
+        <a href="https://www.linkedin.com/in/mohammad-yaser-zarifi/" target="_blank" rel="noopener">Yaser Zarifi</a>
       </div>
     </div>
     <div class="foot-note">
@@ -791,21 +816,23 @@
 </footer>
 
 <script>
-  // Scroll-reveal, respects reduced-motion via the CSS override above.
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        // Optional: Stop observing once revealed if you only want it to happen once
-        // io.unobserve(e.target);
-      }
+  // Defer execution of the IntersectionObserver to not block the main rendering thread
+  document.addEventListener('DOMContentLoaded', () => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          // Stop observing once animated for performance
+          observer.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
     });
-  }, {
-    threshold: 0.1, // Trigger slightly earlier
-    rootMargin: "0px 0px -50px 0px" // Trigger before it comes fully into view from bottom
+    els.forEach(el => io.observe(el));
   });
-  els.forEach(el => io.observe(el));
 </script>
 
 </body>

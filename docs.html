@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Documentation - TeleWire</title>
 <meta name="description" content="Official documentation for TeleWire, the open-source Telegram download manager. Installation, configuration, and architecture details.">
+<link rel="canonical" href="https://yaserzarifi.github.io/telewire/docs.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -172,7 +173,7 @@
     color: var(--copper);
     font-style: normal;
   }
-  
+
   /* Lists */
   .content ul, .content ol {
     margin: 0 0 24px;
@@ -219,7 +220,7 @@
     font-size: 13.5px;
   }
   .content .comment { color: var(--muted-dim); }
-  
+
   /* Copy Button */
   .copy-btn {
     position: absolute;
@@ -320,13 +321,13 @@
     <a class="brand" href="index.html"><span class="dot"></span>TeleWire</a>
     <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">GitHub</a>
+      <a href="https://github.com/YaserZarifi/telewire">GitHub</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap docs-container">
-  
+
   <aside class="sidebar">
     <div class="sidebar-title">Documentation</div>
     <a href="#overview">Overview</a>
@@ -342,12 +343,12 @@
   </aside>
 
   <article class="content">
-    
+
     <h1 id="overview">TeleWire</h1>
     <p>A desktop download manager for Telegram. It signs into your own account, lets you browse any chat's media history, and pulls files straight to disk over several parallel connections — with pause, resume, queueing, and downloads that survive a crash.</p>
-    
+
     <p><strong>No server. No bot. No relay.</strong> The Rust backend <em>is</em> a Telegram client, the same way the official desktop app is. The only two parties ever exchanging file bytes are Telegram's data centers and your disk.</p>
-    
+
     <p>Free, open source, MIT, and there is nothing to pay for — ever.</p>
 
     <h2 id="screenshots">Screenshots</h2>
@@ -388,21 +389,21 @@
     </table>
 
     <h2 id="install">Install</h2>
-    
+
     <h3>Prerequisites</h3>
     <ul>
       <li><strong>Rust 1.85 or newer</strong> — the <code>grammers</code> 0.10 crates are Rust edition 2024</li>
       <li><strong>Node.js 18+</strong></li>
       <li>A platform webview: <strong>WebView2</strong> on Windows (preinstalled on Windows 11), <strong>WebKitGTK</strong> on Linux, <strong>WKWebView</strong> on macOS</li>
     </ul>
-    
+
     <p>On Windows the MSVC toolchain is the usual choice. The project also builds fine on the <code>x86_64-pc-windows-gnu</code> toolchain with MinGW-w64, which is handy when you can't install Visual Studio Build Tools.</p>
 
     <h3>Build</h3>
 <div class="code-window">
 <button class="copy-btn" aria-label="Copy code">Copy</button>
-<pre><code>git clone https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-.git
-cd TeleDownloader-Telegram-Download-Manager-
+<pre><code>git clone https://github.com/YaserZarifi/telewire.git
+cd telewire
 npm install
 npm run app          <span class="comment"># run it</span>
 npm run bundle       <span class="comment"># produce installers in src-tauri/target/release/bundle/</span></code></pre>
@@ -423,7 +424,7 @@ npm run build        <span class="comment"># type-check and bundle the frontend<
     <h3 id="api-id">About <code>api_id</code> / <code>api_hash</code></h3>
     <p>Telegram requires every client to identify <strong>the application</strong> before it can open a connection at all. Telegram Desktop has such a pair; so does every third-party client. It has nothing to do with which account signs in, and it is not a bot token.</p>
     <p>Because it is required <em>before</em> a login code can be sent, it cannot be deferred until after the phone number. So there are two ways to handle it:</p>
-    
+
     <p><strong>As a distributor — recommended.</strong> Register once and bake the values in. Everyone who runs your build then sees only a phone-number prompt:</p>
 <div class="code-window">
 <button class="copy-btn" aria-label="Copy code">Copy</button>
@@ -510,7 +511,7 @@ npm run bundle</code></pre>
         </tr>
       </tbody>
     </table>
-    
+
     <p>Not yet built, and deliberately parked: cross-channel search, duplicate detection by file hash, a per-connection throughput graph, CI-built signed installers, and the auto-updater.</p>
     <p>Builds are <strong>unsigned</strong>, so Windows SmartScreen and macOS Gatekeeper will warn on first launch until code-signing certificates are set up.</p>
 
@@ -518,6 +519,7 @@ npm run bundle</code></pre>
     <h2 id="credits">Credits & License</h2>
     <p>Developed by <strong>Yaser Zarifi</strong>.</p>
     <ul>
+      <li>Project repository: <a href="https://github.com/YaserZarifi/telewire" target="_blank" rel="noopener">github.com/YaserZarifi/telewire</a></li>
       <li>GitHub: <a href="https://github.com/YaserZarifi" target="_blank" rel="noopener">@YaserZarifi</a></li>
       <li>LinkedIn: <a href="https://www.linkedin.com/in/mohammad-yaser-zarifi/" target="_blank" rel="noopener">Mohammad Yaser Zarifi</a></li>
       <li>Portfolio: <a href="https://yaserzarifi.vercel.app/en" target="_blank" rel="noopener">yaserzarifi.vercel.app</a></li>
@@ -559,24 +561,24 @@ npm run bundle</code></pre>
   document.querySelectorAll('.code-window').forEach(windowEl => {
     const btn = windowEl.querySelector('.copy-btn');
     const code = windowEl.querySelector('code');
-    
+
     if (btn && code) {
       btn.addEventListener('click', () => {
         // Remove spans (like comments) to just get raw text, but preserve newlines
         let textToCopy = code.innerText;
-        
+
         navigator.clipboard.writeText(textToCopy).then(() => {
           const originalText = btn.innerText;
           btn.innerText = 'Copied!';
           btn.classList.add('copied');
-          
+
           setTimeout(() => {
             btn.innerText = originalText;
             btn.classList.remove('copied');
           }, 2000);
         }).catch(err => {
           console.error('Failed to copy text: ', err);
-          
+
           // Fallback for older browsers or iframes
           try {
              const textArea = document.createElement("textarea");
@@ -585,7 +587,7 @@ npm run bundle</code></pre>
              textArea.select();
              document.execCommand("copy");
              textArea.remove();
-             
+
              const originalText = btn.innerText;
              btn.innerText = 'Copied!';
              btn.classList.add('copied');

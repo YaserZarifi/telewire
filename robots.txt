@@ -1,0 +1,10 @@
+God-Level SEO Setup
+
+Allows all search engine crawlers full access to the site
+
+User-agent: *
+Allow: /
+
+Points crawlers directly to your sitemap for instant indexing of all pages
+
+Sitemap: https://yaserzarifi.github.io/telewire/sitemap.xml
