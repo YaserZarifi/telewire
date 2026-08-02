@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeleWire - Open Source Telegram Download Manager</title>
+<meta name="description" content="TeleWire is a free, open-source MTProto Telegram download manager. Pull your Telegram media to disk over parallel connections. No server, no bot, no relay.">
+<meta name="keywords" content="Telegram download manager, MTProto client, parallel download, open source Telegram tool, Yaser Zarifi, TeleWire, github open source">
+<meta name="author" content="Yaser Zarifi">
+
+<!-- Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="TeleWire - Open Source Telegram Download Manager">
+<meta property="og:description" content="Pull your Telegram media to disk over several parallel connections. No server, no bot, no relay. Free, open source, MIT.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yaserzarifi.github.io/TeleDownloader-Telegram-Download-Manager-/">
+<!-- Add a screenshot of your app to your repo and link it here for social previews -->
+<!-- <meta property="og:image" content="https://yaserzarifi.github.io/.../preview.png"> -->
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TeleWire - Open Source Telegram Download Manager">
+<meta name="twitter:description" content="Pull your Telegram media to disk over several parallel connections. Free, open source, MIT.">
+
+<!-- Answer Engine Optimization (AEO): JSON-LD Schema Markup -->
+<!-- This tells AI search engines exactly what this page is offering -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TeleWire",
+  "operatingSystem": "Windows, macOS, Linux",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "An open-source Telegram download manager that signs into your own Telegram account and pulls media straight to disk over several parallel connections. No server in between.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Yaser Zarifi",
+    "url": "https://yaserzarifi.vercel.app/en"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0f18;
+    --bg-raised: #101725;
+    --bg-card: #131c2c;
+    --line: #26344a;
+    --line-soft: #1b2537;
+    --paper: #eef2f8;
+    --muted: #8ea0bc;
+    --muted-dim: #5d6d87;
+    --copper: #e3a063;
+    --copper-dim: #7a5a3a;
+    --teal: #5fd9cb;
+    --teal-dim: #2c5951;
+    --radius: 3px;
+    --wrap: 1120px;
+    --disp: "Space Grotesk", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 600px at 82% -10%, rgba(95,217,203,0.07), transparent 60%),
+      radial-gradient(900px 500px at 10% 0%, rgba(227,160,99,0.06), transparent 55%),
+      var(--bg);
+    color:var(--paper);
+    font-family:var(--disp);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--copper); color:#1a1206; }
+
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+
+  .wrap{ width:100%; max-width:var(--wrap); margin:0 auto; padding:0 28px; }
+
+  .mono{ font-family:var(--mono); }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--copper);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--copper-dim);
+  }
+
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(11,15,24,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-weight:600; font-size:17px; letter-spacing:-0.01em;
+    text-decoration:none;
+  }
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 3px rgba(95,217,203,0.15); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{
+    font-size:14px; color:var(--muted); text-decoration:none;
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--paper); }
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:.02em;
+    display:inline-flex; align-items:center; gap:9px;
+    padding:10px 18px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--copper); color:#1a1206; font-weight:600;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); background:#eab278; }
+  .btn-ghost{
+    border-color:var(--line); color:var(--paper);
+  }
+  .btn-ghost:hover{ border-color:var(--muted-dim); }
+  .nav .btn{ padding:9px 16px; }
+
+  .hero{
+    padding:96px 0 40px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;
+  }
+  h1{
+    font-size:clamp(34px, 5vw, 54px);
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    margin:18px 0 20px;
+    font-weight:600;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--copper);
+  }
+  .hero p.lede{
+    font-size:17px;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 30px;
+  }
+  .cta-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
+  .cta-row .btn{ padding:13px 22px; font-size:14px; }
+  .cta-sub{
+    font-family:var(--mono); font-size:12px; color:var(--muted-dim);
+    display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .cta-sub a{ color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line); }
+  .cta-sub a:hover{ color:var(--paper); border-color:var(--muted); }
+
+  /* signature: the pull - parallel wires feeding a file */
+  .rig{
+    position:relative;
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 26px 22px;
+    overflow:hidden;
+  }
+  .rig::before{
+    content:"engine.download // work-stealing queue";
+    position:absolute; top:10px; left:26px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.05em;
+    color:var(--muted-dim);
+  }
+  .rig-inner{ margin-top:26px; }
+  .wire-row{
+    display:grid; grid-template-columns:34px 1fr 40px; align-items:center;
+    gap:12px; height:30px;
+  }
+  .wire-row .idx{ font-family:var(--mono); font-size:11px; color:var(--muted-dim); }
+  .wire-track{
+    position:relative; height:6px; border-radius:3px;
+    background:var(--line-soft); overflow:hidden;
+  }
+  .wire-fill{
+    position:absolute; top:0; left:0; height:100%;
+    background:linear-gradient(90deg, var(--teal-dim), var(--teal));
+    border-radius:3px;
+    animation:pull linear infinite;
+    width:0%;
+  }
+  .wire-row.copper .wire-fill{ background:linear-gradient(90deg, var(--copper-dim), var(--copper)); }
+  .wire-pct{ font-family:var(--mono); font-size:11px; color:var(--muted); text-align:right; }
+
+  @keyframes pull{
+    0%{ width:4%; }
+    100%{ width:100%; }
+  }
+
+  .rig-file{
+    margin-top:22px; padding-top:18px; border-top:1px dashed var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+  }
+  .rig-file b{ color:var(--paper); font-weight:600; }
+  .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 0 rgba(95,217,203,0.6);
+    animation:ring 1.8s ease-out infinite;
+  }
+  @keyframes ring{
+    0%{ box-shadow:0 0 0 0 rgba(95,217,203,0.45); }
+    70%{ box-shadow:0 0 0 8px rgba(95,217,203,0); }
+    100%{ box-shadow:0 0 0 0 rgba(95,217,203,0); }
+  }
+
+  .strip{
+    border-top:1px solid var(--line-soft);
+    border-bottom:1px solid var(--line-soft);
+    padding:22px 0;
+    margin-top:60px;
+  }
+  .strip .wrap{
+    display:flex; gap:40px; flex-wrap:wrap; justify-content:space-between;
+  }
+  .strip-item{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:13px; color:var(--muted);
+  }
+  .strip-item svg{ width:15px; height:15px; flex:none; color:var(--copper); }
+
+  section{ padding:88px 0; }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  h2{
+    font-size:clamp(26px,3.4vw,36px);
+    letter-spacing:-0.015em;
+    margin:16px 0 14px;
+    font-weight:600;
+  }
+  .section-head p{ color:var(--muted); font-size:15.5px; max-width:56ch; }
+
+  /* features */
+  .feat-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .feat{
+    background:var(--bg-card);
+    padding:28px 26px;
+    transition:background .15s ease;
+  }
+  .feat:hover{ background:#16202f; }
+  .feat .tag{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em;
+    color:var(--muted-dim); text-transform:uppercase; margin-bottom:14px;
+    display:block;
+  }
+  .feat h3{ font-size:17px; margin:0 0 8px; font-weight:600; letter-spacing:-0.01em; }
+  .feat p{ font-size:13.8px; color:var(--muted); margin:0; }
+
+  .pipeline{
+    position:relative;
+    display:grid; grid-template-columns:repeat(6,1fr); gap:0;
+    counter-reset:step;
+  }
+  .pipeline::before{
+    content:"";
+    position:absolute; top:19px; left:0; right:0; height:1px;
+    background:var(--line);
+  }
+  .step{ position:relative; padding:0 16px 0 0; }
+  .step:last-child{ padding-right:0; }
+  .step .num{
+    counter-increment:step;
+    width:38px; height:38px; border-radius:50%;
+    background:var(--bg); border:1px solid var(--copper-dim);
+    color:var(--copper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    position:relative; z-index:2; margin-bottom:18px;
+  }
+  .step .num::before{ content: counter(step, decimal-leading-zero); }
+  .step h4{ font-size:14.5px; margin:0 0 8px; font-weight:600; }
+  .step p{ font-size:12.8px; color:var(--muted); margin:0; line-height:1.55; }
+
+  /* privacy */
+  .privacy-card{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:44px;
+    display:grid; grid-template-columns:.9fr 1.1fr; gap:44px;
+  }
+  .privacy-card h2{ margin-top:16px; }
+  .checklist{ list-style:none; margin:0; padding:0; display:grid; gap:16px; }
+  .checklist li{
+    display:flex; gap:12px; align-items:flex-start;
+    font-size:14px; color:var(--paper);
+  }
+  .checklist li svg{ flex:none; width:16px; height:16px; margin-top:2px; color:var(--teal); }
+  .checklist li span{ color:var(--muted); display:block; font-size:13px; margin-top:2px; }
+
+  .author-note {
+    background: linear-gradient(135deg, rgba(227,160,99,0.07), rgba(95,217,203,0.03)), var(--bg-raised);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--copper);
+    border-radius: 8px;
+    padding: 36px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .author-note p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .author-note strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .author-note .signature {
+    font-family: var(--mono);
+    color: var(--copper);
+    font-size: 13.5px;
+    margin-top: 12px;
+  }
+  .author-note .signature a {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(95,217,203,0.3);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .author-note .signature a:hover {
+    border-bottom-color: var(--teal);
+    color: #fff;
+  }
+
+  /* status */
+  .status-table{
+    border:1px solid var(--line-soft); border-radius:6px; overflow:hidden;
+  }
+  .status-row{
+    display:grid; grid-template-columns:120px 1fr auto;
+    gap:18px; align-items:center;
+    padding:14px 20px;
+    border-bottom:1px solid var(--line-soft);
+    font-size:13.5px;
+  }
+  .status-row:last-child{ border-bottom:none; }
+  .status-row .m{ font-family:var(--mono); font-size:12px; color:var(--muted-dim); }
+  .status-row .desc{ color:var(--paper); }
+  .badge{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.04em;
+    padding:4px 9px; border-radius:20px; white-space:nowrap;
+    text-transform:uppercase;
+  }
+  .badge.done{ background:rgba(95,217,203,0.12); color:var(--teal); border:1px solid var(--teal-dim); }
+  .badge.partial{ background:rgba(227,160,99,0.12); color:var(--copper); border:1px solid var(--copper-dim); }
+
+  .download-cta{
+    text-align:center;
+    padding:70px 44px;
+    background:
+      radial-gradient(600px 260px at 50% 0%, rgba(227,160,99,0.10), transparent 70%),
+      var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:8px;
+  }
+  .download-cta .eyebrow{ justify-content:center; }
+  .download-cta .eyebrow::before{ display:none; }
+  .download-cta h2{ margin:16px auto 12px; max-width:20ch; }
+  .download-cta p{ color:var(--muted); max-width:48ch; margin:0 auto 32px; font-size:15px; }
+  .platform-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .platform-row .btn{ padding:14px 26px; font-size:14px; }
+  .fileinfo{ font-family:var(--mono); font-size:11.5px; color:var(--muted-dim); }
+  .fileinfo a{ color:var(--muted); text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px; }
+  .fileinfo a:hover{ color:var(--paper); }
+
+  /* footer */
+  footer{
+    border-top:1px solid var(--line-soft);
+    padding:36px 0 48px;
+  }
+  .foot-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .foot-row .brand{ font-size:14px; }
+  .foot-links{ display:flex; gap:22px; font-size:13px; color:var(--muted); }
+  .foot-links a{ text-decoration:none; }
+  .foot-links a:hover{ color:var(--paper); }
+  .foot-note{ font-family:var(--mono); font-size:11.5px; color:var(--muted-dim); margin-top:18px; }
+
+  /* reveal animations */
+  .reveal { 
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); 
+    will-change: opacity, transform; /* Optimize for hardware acceleration */
+  }
+  .reveal.in { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+  
+  /* Staggered delays for child elements if needed */
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+  .delay-5 { transition-delay: 0.5s; }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .feat-grid{ grid-template-columns:1fr 1fr; }
+    .pipeline{ grid-template-columns:1fr 1fr; row-gap:34px; }
+    .pipeline::before{ display:none; }
+    .privacy-card{ grid-template-columns:1fr; }
+    .strip .wrap{ gap:18px; }
+    .author-note{ padding:28px; }
+  }
+  @media (max-width: 560px){
+    .feat-grid{ grid-template-columns:1fr; }
+    .pipeline{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+    .download-cta{ padding:48px 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <a class="brand" href="#top"><span class="dot"></span>TeleWire</a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#state">Project state</a>
+      <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">GitHub</a>
+    </nav>
+    <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe" aria-label="Download TeleWire for Windows">
+      Download for Windows
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">MTProto client · not a bot, not a relay</span>
+        <h1>Your files.<br>Your account.<br><em>No server in between.</em></h1>
+        <p class="lede">
+          TeleWire signs into your Telegram account and pulls media straight
+          to disk over several parallel connections. It supports pausing, resuming,
+          queueing, and downloads that survive an unexpected crash.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
+            ↓ Download v1.0 (Windows)
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">
+            View source
+          </a>
+        </div>
+        <div class="cta-sub">
+          <span>Free &amp; open source (MIT)</span>
+          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">.msi installer</a>
+          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest">All releases</a>
+        </div>
+      </div>
+
+      <!-- signature element: the pull -->
+      <div class="rig reveal delay-1">
+        <div class="rig-inner">
+          <div class="wire-row">
+            <span class="idx mono">00</span>
+            <div class="wire-track"><div class="wire-fill" style="animation-duration:2.6s;"></div></div>
+            <span class="wire-pct mono">7.1s</span>
+          </div>
+          <div class="wire-row copper">
+            <span class="idx mono">01</span>
+            <div class="wire-track"><div class="wire-fill" style="animation-duration:3.4s; animation-delay:-1.1s;"></div></div>
+            <span class="wire-pct mono">6.9s</span>
+          </div>
+          <div class="wire-row">
+            <span class="idx mono">02</span>
+            <div class="wire-track"><div class="wire-fill" style="animation-duration:2.1s; animation-delay:-0.4s;"></div></div>
+            <span class="wire-pct mono">7.3s</span>
+          </div>
+          <div class="wire-row copper">
+            <span class="idx mono">03</span>
+            <div class="wire-track"><div class="wire-fill" style="animation-duration:3.9s; animation-delay:-2.2s;"></div></div>
+            <span class="wire-pct mono">6.8s</span>
+          </div>
+          <div class="wire-row">
+            <span class="idx mono">04</span>
+            <div class="wire-track"><div class="wire-fill" style="animation-duration:2.9s; animation-delay:-0.9s;"></div></div>
+            <span class="wire-pct mono">7.0s</span>
+          </div>
+        </div>
+        <div class="rig-file">
+          <span><span class="pulse" style="display:inline-block;margin-right:8px;vertical-align:middle;"></span>5 workers, one shared queue. Slow connections just take fewer chunks.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <div class="strip-item reveal">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h5M12 10h5M8 6l-2 4 2 4M12 6l2 4-2 4"/></svg>
+        No server
+      </div>
+      <div class="strip-item reveal delay-1">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+        No bot account
+      </div>
+      <div class="strip-item reveal delay-2">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l12 12M16 4L4 16"/></svg>
+        No relay, ever
+      </div>
+      <div class="strip-item reveal delay-3">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="12" height="14" rx="1"/><path d="M7 7h6M7 10h6M7 13h3"/></svg>
+        Zero telemetry
+      </div>
+      <div class="strip-item reveal delay-4">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l6 3v5c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8V5l6-3z"/></svg>
+        MIT licensed
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">What it does</span>
+        <h2>Every chat. Every file type. On your terms.</h2>
+        <p>The Rust backend is a standard Telegram client. It works exactly like the official desktop app. Nothing hidden, nothing extra.</p>
+      </div>
+
+      <div class="feat-grid">
+        <div class="feat reveal">
+          <span class="tag mono">01 · coverage</span>
+          <h3>Every chat, grouped</h3>
+          <p>Search and browse channels, groups, bots, one-to-one chats, and Saved Messages. We classify them the same way Telegram does.</p>
+        </div>
+        <div class="feat reveal delay-1">
+          <span class="tag mono">02 · classify</span>
+          <h3>Every file type</h3>
+          <p>Video, audio, photos, and documents are classified using both MIME and filename. That means an octet-stream video will still correctly show up as a video.</p>
+        </div>
+        <div class="feat reveal delay-2">
+          <span class="tag mono">03 · throughput</span>
+          <h3>Parallel by default</h3>
+          <p>Each file splits into 512 KiB chunks. Multiple connections pull these chunks simultaneously from a shared work-stealing queue.</p>
+        </div>
+        <div class="feat reveal">
+          <span class="tag mono">04 · tuning</span>
+          <h3>Adaptive speed</h3>
+          <p>We tune the worker count based on actual measured throughput, rather than guessing. It adds workers when it helps and scales back if it stops helping.</p>
+        </div>
+        <div class="feat reveal delay-1">
+          <span class="tag mono">05 · resilience</span>
+          <h3>Crash-safe resume</h3>
+          <p>If you kill the app mid-transfer, it's fine. We use a manifest of confirmed-flushed chunks, so the next launch resumes exactly where you left off.</p>
+        </div>
+        <div class="feat reveal delay-2">
+          <span class="tag mono">06 · order</span>
+          <h3>Auto-organised</h3>
+          <p>Files automatically land in organized folders: <code>&lt;download root&gt;/&lt;chat&gt;/&lt;YYYY-MM&gt;/&lt;filename&gt;</code>. You get pause, resume, cancel, and retry controls for every single job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How downloading works</span>
+        <h2>One file, from request to a name on disk</h2>
+        <p>This happens in six specific steps every single time. A file only gets its real name on your disk when it is 100% complete. Everything before that stays as a <code>.part</code> file.</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="step reveal">
+          <div class="num"></div>
+          <h4>Size &amp; plan</h4>
+          <p>We pull the file size from the message's metadata and divide it into 512 KiB, 4 KiB-aligned chunks.</p>
+        </div>
+        <div class="step reveal delay-1">
+          <div class="num"></div>
+          <h4>Preallocate</h4>
+          <p>The destination file is preallocated to its full size as <code>&lt;name&gt;.part</code> before any data arrives.</p>
+        </div>
+        <div class="step reveal delay-2">
+          <div class="num"></div>
+          <h4>Work-steal</h4>
+          <p>Workers pull tasks from a shared queue of chunk indices. A slow connection simply processes fewer chunks.</p>
+        </div>
+        <div class="step reveal delay-3">
+          <div class="num"></div>
+          <h4>Adapt</h4>
+          <p>Concurrency increases as long as new workers improve throughput, and backs off if we hit flood-waits.</p>
+        </div>
+        <div class="step reveal delay-4">
+          <div class="num"></div>
+          <h4>Record</h4>
+          <p>A sidecar manifest logs chunks only after they are confirmed flushed to the disk. This is the source of truth for resuming.</p>
+        </div>
+        <div class="step reveal delay-5">
+          <div class="num"></div>
+          <h4>Verify &amp; rename</h4>
+          <p>We check the final byte count, then atomically rename the <code>.part</code> file. Complete means complete.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap">
+      <div class="privacy-card reveal">
+        <div>
+          <span class="eyebrow">Privacy</span>
+          <h2>Zero telemetry is a concrete guarantee</h2>
+          <p style="color:var(--muted); font-size:14.5px;">Because this app signs directly into your Telegram account, you need to know exactly what it's doing. You can verify every single claim here in the open source code.</p>
+        </div>
+        <ul class="checklist">
+          <li>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <div>No analytics, no crash reporting, no phone-home
+              <span>The only network destination is Telegram's own servers. There is no update check and no error collector.</span>
+            </div>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <div>The webview never makes a network request
+              <span>A strict Content-Security-Policy blocks all remote origins. Even the fonts are bundled locally.</span>
+            </div>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <div>api_hash lives in your OS keychain
+              <span>We use Windows Credential Manager, macOS Keychain, or Linux Secret Service. Never a plain text config file.</span>
+            </div>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg>
+            <div>Session key never crosses into the frontend
+              <span>The MTProto session stays secure in an owner-only SQLite file inside your per-user app data directory.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="state">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Built in the open</span>
+        <h2>State of the project, stated plainly</h2>
+        <p>We don't mark any milestone as done until we've tested it against a live account.</p>
+      </div>
+
+      <div class="status-table">
+        <div class="status-row reveal">
+          <span class="m">M1–M3</span>
+          <span class="desc">Login, session persistence, paginated media browsing, single-file download</span>
+          <span class="badge done">Verified</span>
+        </div>
+        <div class="status-row reveal delay-1">
+          <span class="m">M4–M5</span>
+          <span class="desc">Parallel chunked downloads, queue with pause / resume / cancel / retry</span>
+          <span class="badge done">Verified</span>
+        </div>
+        <div class="status-row reveal delay-2">
+          <span class="m">M6</span>
+          <span class="desc">Crash resume, adaptive concurrency, auto-organised folders</span>
+          <span class="badge partial">Implemented</span>
+        </div>
+        <div class="status-row reveal delay-3">
+          <span class="m">M7</span>
+          <span class="desc">Installers for Windows / macOS / Linux</span>
+          <span class="badge partial">Windows only</span>
+        </div>
+      </div>
+      <p class="foot-note reveal delay-4" style="margin-top:16px;">
+        Not yet built, and deliberately parked: cross-channel search, duplicate detection by file hash,
+        a per-connection throughput graph, CI-signed installers, and the auto-updater. Builds are unsigned,
+        so SmartScreen will warn on first launch.
+      </p>
+    </div>
+  </section>
+
+  <section id="author">
+    <div class="wrap reveal">
+      <div class="author-note">
+        <span class="eyebrow" style="color:var(--teal); margin-bottom: -4px;">A note from the developer</span>
+        <p>
+          Hi there! I built TeleWire purely because I needed a robust download manager for my own Telegram files. This project is <strong>completely non-monetized</strong>. It started as a fun project to solve a personal pain point, and I decided to put it out here open-source, hoping you might find it genuinely useful too. 
+        </p>
+        <p>
+          I really appreciate your feedback, bug reports, or messages!
+        </p>
+        <div class="signature">
+          — Yaser Zarifi (<a href="https://yaserzarifi.vercel.app/en#contact" target="_blank" rel="noopener noreferrer">Let's connect on my portfolio</a>)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 0;">
+    <div class="wrap">
+      <div class="download-cta reveal">
+        <span class="eyebrow">Get TeleWire</span>
+        <h2>Free. Open source. Nothing to pay for, ever.</h2>
+        <p>Sign in with your phone number, exactly like the official app. TeleWire is not a bot. It only sees what your account can already see.</p>
+        <div class="platform-row">
+          <a class="btn btn-primary" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest/download/TeleWire_1.0.0_x64-setup.exe">
+            ↓ TeleWire_1.0.0_x64-setup.exe
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/download/v1.0/TeleWire_1.0.0_x64_en-US.msi">
+            .msi installer
+          </a>
+        </div>
+        <div class="fileinfo">
+          v1.0 · Windows x64 · 2.8 MB ·
+          <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/releases/latest">release notes on GitHub</a>
+          · macOS &amp; Linux build from source today
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap reveal">
+    <div class="foot-row">
+      <a class="brand" href="#top"><span class="dot"></span>TeleWire</a>
+      <div class="foot-links">
+        <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-">GitHub</a>
+        <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/blob/master/README.md">Documentation</a>
+        <a href="https://github.com/YaserZarifi/TeleDownloader-Telegram-Download-Manager-/blob/master/LICENSE">MIT License</a>
+        <a href="https://www.linkedin.com/in/mohammad-yaser-zarifi/" target="_blank" rel="noopener noreferrer">Yaser Zarifi</a>
+      </div>
+    </div>
+    <div class="foot-note">
+      Uses grammers for MTProto. Crypto/auth is community-maintained and not formally audited. Please review the code yourself before treating any client as security-critical.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal, respects reduced-motion via the CSS override above.
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) { 
+        e.target.classList.add('in'); 
+        // Optional: Stop observing once revealed if you only want it to happen once
+        // io.unobserve(e.target); 
+      } 
+    });
+  }, { 
+    threshold: 0.1, // Trigger slightly earlier
+    rootMargin: "0px 0px -50px 0px" // Trigger before it comes fully into view from bottom
+  });
+  els.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
